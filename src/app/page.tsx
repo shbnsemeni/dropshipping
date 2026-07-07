@@ -89,28 +89,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="bg-stone-900 py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="text-xs uppercase tracking-widest text-rose-400 font-medium">Why Choose Us</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">The JSitemaUang Difference</h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: "🌍", title: "Worldwide Shipping", desc: "Fast delivery to over 200 countries with tracking" },
-              { icon: "🔒", title: "Secure Payments", desc: "Protected by Stripe's encrypted checkout" },
-              { icon: "🎯", title: "Quality Guaranteed", desc: "Carefully curated products from trusted suppliers" },
-              { icon: "💬", title: "24/7 Support", desc: "We're here to help anytime you need us" },
-            ].map((item, i) => (
-              <div key={item.title} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center hover:bg-white/10 transition-colors border border-white/5" style={{ animationDelay: `${i * 0.15}s` }}>
-                <span className="text-3xl mb-4 block">{item.icon}</span>
-                <h3 className="text-white font-semibold mb-2">{item.title}</h3>
-                <p className="text-stone-400 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="bg-gradient-to-r from-stone-900 to-stone-800 rounded-3xl p-8 md:p-16 text-center text-white relative overflow-hidden">

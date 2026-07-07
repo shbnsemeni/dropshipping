@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, Search, Menu, X, User, LogOut, Package, ChevronDown } from "lucide-react";
+import { ShoppingCart, Search, Menu, X, User, LogOut, Package } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { useState, useRef, useEffect } from "react";
@@ -51,68 +51,63 @@ export function Header() {
     }
   };
 
-  const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href));
-
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       scrolled
-        ? "bg-white/90 backdrop-blur-xl shadow-sm border-b border-stone-200/50"
+        ? "bg-white/95 backdrop-blur-lg shadow-sm border-b border-stone-200/50"
         : "bg-transparent"
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl md:text-2xl font-bold tracking-tight">
-              <span className={scrolled ? "text-stone-900" : "text-white"}>JSitema</span>
-              <span className="text-rose-500">U</span>
-              <span className={scrolled ? "text-stone-900" : "text-white"}>ang</span>
-            </Link>
-            <nav className="hidden lg:flex items-center gap-1">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Products", href: "/products" },
-              ].map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`px-4 py-2 text-sm font-medium rounded-xl transition-all ${
-                    isActive(link.href)
-                      ? scrolled ? "bg-stone-100 text-stone-900" : "bg-white/10 text-white"
-                      : scrolled
-                        ? "text-stone-600 hover:text-stone-900 hover:bg-stone-50"
-                        : "text-white/70 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-              <div className="relative group">
-                <button className={`flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-xl transition-all ${
-                  categories.some((c) => pathname.includes(c.slug))
-                    ? scrolled ? "bg-stone-100 text-stone-900" : "bg-white/10 text-white"
-                    : scrolled
-                      ? "text-stone-600 hover:text-stone-900 hover:bg-stone-50"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
-                }`}>
-                  Categories
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-                <div className="absolute top-full left-0 mt-1 w-48 bg-white rounded-2xl shadow-xl border border-stone-200 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 origin-top-left">
-                  {categories.map((cat) => (
-                    <Link
-                      key={cat.slug}
-                      href={`/products?category=${cat.slug}`}
-                      className="block px-4 py-2.5 text-sm text-stone-700 hover:bg-stone-50 hover:text-stone-900 transition-colors"
-                    >
-                      {cat.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </nav>
-          </div>
+          <Link href="/" className="flex items-center gap-1.5 shrink-0">
+            <span className={`text-lg md:text-xl font-bold tracking-tight transition-colors ${
+              scrolled ? "text-stone-900" : "text-white"
+            }`}>
+              JSitema<span className="text-rose-500">U</span>ang
+            </span>
+          </Link>
 
-          <div className="flex items-center gap-1.5">
+          <nav className="hidden md:flex items-center gap-6">
+            <Link
+              href="/"
+              className={`text-sm font-medium transition-colors ${
+                pathname === "/"
+                  ? scrolled ? "text-stone-900" : "text-white"
+                  : scrolled
+                    ? "text-stone-500 hover:text-stone-900"
+                    : "text-white/70 hover:text-white"
+              }`}
+            >
+              Home
+            </Link>
+            <Link
+              href="/products"
+              className={`text-sm font-medium transition-colors ${
+                pathname.startsWith("/products")
+                  ? scrolled ? "text-stone-900" : "text-white"
+                  : scrolled
+                    ? "text-stone-500 hover:text-stone-900"
+                    : "text-white/70 hover:text-white"
+              }`}
+            >
+              Products
+            </Link>
+            {categories.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/products?category=${cat.slug}`}
+                className={`text-sm font-medium transition-colors ${
+                  scrolled
+                    ? "text-stone-500 hover:text-stone-900"
+                    : "text-white/70 hover:text-white"
+                }`}
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-1">
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className={`p-2.5 rounded-xl transition-colors ${
@@ -182,7 +177,7 @@ export function Header() {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className={`lg:hidden p-2.5 rounded-xl transition-colors ${
+              className={`md:hidden p-2.5 rounded-xl transition-colors ${
                 scrolled ? "hover:bg-stone-100 text-stone-600" : "hover:bg-white/10 text-white/80"
               }`}
               aria-label="Menu"
@@ -217,7 +212,7 @@ export function Header() {
       )}
 
       {menuOpen && (
-        <div className={`lg:hidden border-t max-h-[80vh] overflow-y-auto ${
+        <div className={`md:hidden border-t max-h-[80vh] overflow-y-auto ${
           scrolled
             ? "bg-white border-stone-200"
             : "bg-stone-950/95 backdrop-blur-xl border-white/10"
@@ -234,9 +229,6 @@ export function Header() {
               All Products
             </Link>
             <div className={`border-t my-2 ${scrolled ? "border-stone-100" : "border-white/10"}`} />
-            <p className={`px-4 py-1 text-xs uppercase tracking-wider font-medium ${scrolled ? "text-stone-400" : "text-stone-500"}`}>
-              Categories
-            </p>
             {categories.map((cat) => (
               <Link key={cat.slug} href={`/products?category=${cat.slug}`} onClick={() => setMenuOpen(false)} className={`block px-4 py-3 text-sm rounded-xl transition-colors ${
                 scrolled ? "text-stone-600 hover:bg-stone-50" : "text-white/70 hover:bg-white/10"
@@ -247,13 +239,13 @@ export function Header() {
             <div className={`border-t my-2 ${scrolled ? "border-stone-100" : "border-white/10"}`} />
             {!customer && (
               <Link href="/account/login" onClick={() => setMenuOpen(false)} className="block px-4 py-3 text-sm font-medium text-rose-500 hover:bg-rose-50/10 rounded-xl transition-colors">
-                Sign In / Register
+                Sign In
               </Link>
             )}
             <Link href="/about" onClick={() => setMenuOpen(false)} className={`block px-4 py-3 text-sm rounded-xl transition-colors ${
               scrolled ? "text-stone-600 hover:bg-stone-50" : "text-white/70 hover:bg-white/10"
             }`}>
-              About Us
+              About
             </Link>
             <Link href="/contact" onClick={() => setMenuOpen(false)} className={`block px-4 py-3 text-sm rounded-xl transition-colors ${
               scrolled ? "text-stone-600 hover:bg-stone-50" : "text-white/70 hover:bg-white/10"
