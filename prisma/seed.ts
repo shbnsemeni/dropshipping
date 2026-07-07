@@ -12,6 +12,7 @@ async function main() {
     create: {
       email: "admin@jsitemuang.xyz",
       name: "Admin",
+      role: "admin",
       password: adminPassword,
     },
   });

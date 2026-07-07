@@ -20,6 +20,10 @@ export function AdminLayoutClient({ children }: { children: ReactNode }) {
     redirect("/admin/login");
   }
 
+  if (session?.user && (session.user as any).role !== "admin") {
+    redirect("/admin/login");
+  }
+
   return (
     <div className="flex min-h-screen bg-stone-50">
       <AdminSidebar />
