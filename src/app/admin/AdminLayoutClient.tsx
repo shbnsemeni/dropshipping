@@ -1,12 +1,15 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { usePathname, redirect } from "next/navigation";
 import { AdminSidebar } from "@/components/AdminSidebar";
 import { ReactNode } from "react";
 
 export function AdminLayoutClient({ children }: { children: ReactNode }) {
   const { data: session, status } = useSession();
+  const pathname = usePathname();
+
+  const isLoginPage = pathname === "/admin/login";
 
   if (status === "loading") {
     return (
@@ -16,12 +19,16 @@ export function AdminLayoutClient({ children }: { children: ReactNode }) {
     );
   }
 
-  if (status === "unauthenticated") {
+  if (!isLoginPage && status === "unauthenticated") {
     redirect("/admin/login");
   }
 
-  if (session?.user && (session.user as any).role !== "admin") {
+  if (!isLoginPage && session?.user && (session.user as any).role !== "admin") {
     redirect("/admin/login");
+  }
+
+  if (isLoginPage) {
+    return <>{children}</>;
   }
 
   return (
