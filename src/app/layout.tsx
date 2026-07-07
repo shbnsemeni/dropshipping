@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CustomerProvider>
           <CartProvider>
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 pt-16 md:pt-20">{children}</main>
             <Footer />
           </CartProvider>
         </CustomerProvider>

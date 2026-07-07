@@ -1,0 +1,1 @@
+{"key":"DATABASE_URL","value":"postgresql://neondb_owner:npg_5PpM9OHqXQWZ@ep-curly-sunset-atp4dpji.c-9.us-east-1.aws.neon.tech/neondb?sslmode=require","target":["production"],"type":"encrypted"}
