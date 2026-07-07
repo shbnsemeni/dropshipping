@@ -10,8 +10,8 @@ export function AdminLayoutClient({ children }: { children: ReactNode }) {
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full" />
+      <div className="flex items-center justify-center min-h-screen bg-stone-50">
+        <div className="animate-spin w-8 h-8 border-4 border-rose-600 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -21,7 +21,7 @@ export function AdminLayoutClient({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-stone-50">
       <AdminSidebar />
       <div className="flex-1 p-8 overflow-auto">
         {children}

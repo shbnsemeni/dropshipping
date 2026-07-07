@@ -20,17 +20,19 @@ function OrderSuccessContent() {
 
   return (
     <div className="max-w-lg mx-auto px-4 py-20 text-center">
-      <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-6" />
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Placed Successfully!</h1>
-      <p className="text-gray-600 mb-2">
+      <div className="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+        <CheckCircle className="w-10 h-10 text-emerald-600" />
+      </div>
+      <h1 className="text-3xl font-bold text-stone-900 mb-4">Order Placed Successfully!</h1>
+      <p className="text-stone-600 mb-2">
         Thank you for your purchase. Your order has been confirmed.
       </p>
       {sessionId && (
-        <p className="text-sm text-gray-500 mb-8">
-          Session ID: <span className="font-mono">{sessionId.slice(0, 20)}...</span>
+        <p className="text-xs text-stone-400 mb-8">
+          Order reference: <span className="font-mono">{sessionId.slice(0, 20)}...</span>
         </p>
       )}
-      <p className="text-sm text-gray-500 mb-8">
+      <p className="text-sm text-stone-500 mb-8">
         You will receive an email confirmation shortly. Redirecting to home in {countdown}s...
       </p>
       <div className="flex justify-center gap-4">
@@ -47,7 +49,7 @@ function OrderSuccessContent() {
 
 export default function OrderSuccessPage() {
   return (
-    <Suspense fallback={<div className="text-center py-20 text-gray-500">Loading...</div>}>
+    <Suspense fallback={<div className="text-center py-20 text-stone-500">Loading...</div>}>
       <OrderSuccessContent />
     </Suspense>
   );

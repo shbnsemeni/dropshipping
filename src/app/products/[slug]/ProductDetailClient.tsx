@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingCart, ExternalLink, ChevronLeft, ChevronRight, Zap, Shield, Truck } from "lucide-react";
+import { ShoppingCart, Check, ChevronLeft, ChevronRight, Star, Shield, Truck, ArrowLeft } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
@@ -26,6 +26,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const hasDiscount = product.salePrice !== null && product.salePrice < product.price;
   const discountPercent = hasDiscount ? Math.round((1 - product.salePrice! / product.price) * 100) : 0;
@@ -41,26 +42,21 @@ export function ProductDetailClient({ product }: { product: Product }) {
         slug: product.slug,
       });
     }
+    setAddedToCart(true);
     toast.success(`Added ${quantity} item${quantity > 1 ? "s" : ""} to cart!`);
+    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   return (
     <div>
-      <nav className="text-sm text-gray-500 mb-6">
-        <Link href="/" className="hover:text-blue-600">Home</Link>
-        <span className="mx-2">/</span>
-        <Link href="/products" className="hover:text-blue-600">Products</Link>
-        <span className="mx-2">/</span>
-        <Link href={`/products?category=${product.category.slug}`} className="hover:text-blue-600">
-          {product.category.name}
-        </Link>
-        <span className="mx-2">/</span>
-        <span className="text-gray-900">{product.name}</span>
-      </nav>
+      <Link href="/products" className="inline-flex items-center gap-1.5 text-sm text-stone-500 hover:text-stone-900 mb-6 transition-colors">
+        <ArrowLeft className="w-4 h-4" />
+        Back to Products
+      </Link>
 
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        <div>
-          <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-50 mb-4">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
+        <div className="space-y-4">
+          <div className="relative aspect-square rounded-2xl overflow-hidden bg-stone-50">
             <img
               src={product.images[selectedImage]}
               alt={product.name}
@@ -75,29 +71,29 @@ export function ProductDetailClient({ product }: { product: Product }) {
               <>
                 <button
                   onClick={() => setSelectedImage((prev) => Math.max(0, prev - 1))}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors flex items-center justify-center"
                   disabled={selectedImage === 0}
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  <ChevronLeft className="w-5 h-5 text-stone-700" />
                 </button>
                 <button
                   onClick={() => setSelectedImage((prev) => Math.min(product.images.length - 1, prev + 1))}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-2 rounded-full shadow hover:bg-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors flex items-center justify-center"
                   disabled={selectedImage === product.images.length - 1}
                 >
-                  <ChevronRight className="w-5 h-5" />
+                  <ChevronRight className="w-5 h-5 text-stone-700" />
                 </button>
               </>
             )}
           </div>
           {product.images.length > 1 && (
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(i)}
-                  className={`w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
-                    i === selectedImage ? "border-blue-600" : "border-gray-200"
+                  className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
+                    i === selectedImage ? "border-stone-900 ring-2 ring-stone-900/20" : "border-stone-200 hover:border-stone-400"
                   }`}
                 >
                   <img src={img} alt="" className="w-full h-full object-cover" />
@@ -107,69 +103,87 @@ export function ProductDetailClient({ product }: { product: Product }) {
           )}
         </div>
 
-        <div>
-          <p className="text-sm text-blue-600 font-medium mb-2">{product.category.name}</p>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">{product.name}</h1>
+        <div className="flex flex-col">
+          <div className="flex items-center gap-2 mb-3">
+            <Link href={`/products?category=${product.category.slug}`} className="text-xs uppercase tracking-wider text-rose-500 font-medium hover:text-rose-600 transition-colors">
+              {product.category.name}
+            </Link>
+            <span className="text-stone-300">·</span>
+            <div className="flex items-center gap-1">
+              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <span className="text-xs text-stone-500">4.8 (124 reviews)</span>
+            </div>
+          </div>
+
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-stone-900 mb-4 leading-tight">{product.name}</h1>
 
           <div className="flex items-baseline gap-3 mb-6">
             {hasDiscount ? (
               <>
-                <span className="text-3xl font-bold text-blue-600">{formatPrice(product.salePrice!)}</span>
-                <span className="text-xl text-gray-400 line-through">{formatPrice(product.price)}</span>
+                <span className="text-3xl font-bold text-rose-600">{formatPrice(product.salePrice!)}</span>
+                <span className="text-lg text-stone-400 line-through">{formatPrice(product.price)}</span>
                 <Badge variant="danger">Save {formatPrice(product.price - product.salePrice!)}</Badge>
               </>
             ) : (
-              <span className="text-3xl font-bold text-gray-900">{formatPrice(product.price)}</span>
+              <span className="text-3xl font-bold text-stone-900">{formatPrice(product.price)}</span>
             )}
           </div>
 
-          <p className="text-gray-600 leading-relaxed mb-8">{product.description}</p>
+          <p className="text-stone-600 leading-relaxed mb-8">{product.description}</p>
 
-          <div className="flex items-center gap-4 mb-6">
-            <div className="flex items-center border border-gray-300 rounded-lg">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-3 py-2 hover:bg-gray-50 text-gray-600">
+          <div className="flex items-center gap-2 text-sm text-emerald-600 mb-6">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            In Stock ({product.stock}+ available)
+          </div>
+
+          <div className="flex items-center gap-4 mb-8">
+            <div className="flex items-center border border-stone-200 rounded-xl overflow-hidden">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-11 h-11 flex items-center justify-center hover:bg-stone-50 text-stone-600 transition-colors"
+              >
                 -
               </button>
-              <span className="px-4 py-2 font-medium min-w-[3rem] text-center">{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)} className="px-3 py-2 hover:bg-gray-50 text-gray-600">
+              <span className="w-14 text-center font-medium text-stone-900">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-11 h-11 flex items-center justify-center hover:bg-stone-50 text-stone-600 transition-colors"
+              >
                 +
               </button>
             </div>
-            <Button size="lg" onClick={handleAddToCart}>
-              <ShoppingCart className="w-5 h-5 mr-2" />
-              Add to Cart
+            <Button
+              size="lg"
+              variant={addedToCart ? "secondary" : "accent"}
+              onClick={handleAddToCart}
+              className="flex-1"
+            >
+              {addedToCart ? (
+                <>
+                  <Check className="w-5 h-5 mr-2" />
+                  Added to Cart
+                </>
+              ) : (
+                <>
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Add to Cart
+                </>
+              )}
             </Button>
           </div>
 
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <span className="w-2 h-2 rounded-full bg-green-500" />
-            In Stock ({product.stock}+)
-          </div>
-
-          {product.aliExpressUrl && (
-            <a
-              href={product.aliExpressUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600 mb-8"
-            >
-              <ExternalLink className="w-4 h-4" />
-              View on AliExpress
-            </a>
-          )}
-
-          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-gray-200">
-            <div className="text-center">
-              <Truck className="w-6 h-6 mx-auto mb-1 text-blue-600" />
-              <p className="text-xs text-gray-500">Free Shipping</p>
+          <div className="grid grid-cols-3 gap-4 pt-6 border-t border-stone-200 mt-auto">
+            <div className="flex flex-col items-center text-center p-3 bg-stone-50 rounded-xl">
+              <Truck className="w-5 h-5 text-stone-700 mb-1" />
+              <p className="text-[11px] text-stone-500 font-medium">Free Shipping</p>
             </div>
-            <div className="text-center">
-              <Shield className="w-6 h-6 mx-auto mb-1 text-blue-600" />
-              <p className="text-xs text-gray-500">Secure Payment</p>
+            <div className="flex flex-col items-center text-center p-3 bg-stone-50 rounded-xl">
+              <Shield className="w-5 h-5 text-stone-700 mb-1" />
+              <p className="text-[11px] text-stone-500 font-medium">Secure Payment</p>
             </div>
-            <div className="text-center">
-              <Zap className="w-6 h-6 mx-auto mb-1 text-blue-600" />
-              <p className="text-xs text-gray-500">Fast Delivery</p>
+            <div className="flex flex-col items-center text-center p-3 bg-stone-50 rounded-xl">
+              <svg className="w-5 h-5 text-stone-700 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+              <p className="text-[11px] text-stone-500 font-medium">30-Day Returns</p>
             </div>
           </div>
         </div>

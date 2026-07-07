@@ -69,7 +69,7 @@ export default function AdminProductsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Products</h1>
+        <h1 className="text-2xl font-bold text-stone-900">Products</h1>
         <Link href="/admin/products/new">
           <Button>
             <Plus className="w-4 h-4 mr-2" />
@@ -79,20 +79,20 @@ export default function AdminProductsPage() {
       </div>
 
       <div className="relative mb-6">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
         <input
           type="text"
           placeholder="Search products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+          className="w-full pl-10 pr-4 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-900 focus:border-stone-900 outline-none text-sm"
         />
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="text-left text-sm text-gray-500 bg-gray-50">
+            <tr className="text-left text-sm text-stone-500 bg-stone-50">
               <th className="px-6 py-3 font-medium">Product</th>
               <th className="px-6 py-3 font-medium">Category</th>
               <th className="px-6 py-3 font-medium">Price</th>
@@ -101,9 +101,9 @@ export default function AdminProductsPage() {
               <th className="px-6 py-3 font-medium">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-stone-100">
             {filtered.map((product) => (
-              <tr key={product.id} className="text-sm text-gray-900 hover:bg-gray-50">
+              <tr key={product.id} className="text-sm text-stone-900 hover:bg-stone-50">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <img src={product.images[0]} alt={product.name} className="w-10 h-10 object-cover rounded-lg" />
@@ -115,7 +115,7 @@ export default function AdminProductsPage() {
                   {product.salePrice ? (
                     <div>
                       <span className="font-medium">${product.salePrice.toFixed(2)}</span>
-                      <span className="text-gray-400 line-through ml-1">${product.price.toFixed(2)}</span>
+                      <span className="text-stone-400 line-through ml-1">${product.price.toFixed(2)}</span>
                     </div>
                   ) : (
                     <span>${product.price.toFixed(2)}</span>
@@ -127,7 +127,7 @@ export default function AdminProductsPage() {
                   </Badge>
                 </td>
                 <td className="px-6 py-4">
-                  {product.featured ? <Badge variant="success">Yes</Badge> : <span className="text-gray-400">No</span>}
+                  {product.featured ? <Badge variant="success">Yes</Badge> : <span className="text-stone-400">No</span>}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
@@ -145,7 +145,7 @@ export default function AdminProductsPage() {
             ))}
             {filtered.length === 0 && !loading && (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-8 text-center text-stone-500">
                   No products found
                 </td>
               </tr>
@@ -155,7 +155,7 @@ export default function AdminProductsPage() {
       </div>
 
       <Modal open={!!deleteModal} onClose={() => setDeleteModal(null)} title="Delete Product">
-        <p className="text-gray-600 mb-6">Are you sure you want to delete this product? This action cannot be undone.</p>
+        <p className="text-stone-600 mb-6">Are you sure you want to delete this product? This action cannot be undone.</p>
         <div className="flex justify-end gap-3">
           <Button variant="outline" onClick={() => setDeleteModal(null)}>Cancel</Button>
           <Button variant="danger" onClick={() => handleDelete(deleteModal!)} loading={deleting}>

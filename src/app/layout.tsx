@@ -4,26 +4,31 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
+import { CustomerProvider } from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JSitemaUang - Premium Dropshipping Store",
-  description: "Discover amazing products at unbeatable prices. Fast shipping worldwide.",
+  title: "JSitemaUang — Premium Dropshipping Store",
+  description: "Discover amazing products at unbeatable prices. Fast worldwide shipping.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen`}>
-        <CartProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </CartProvider>
-        <Toaster position="bottom-right" />
+        <CustomerProvider>
+          <CartProvider>
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CartProvider>
+        </CustomerProvider>
+        <Toaster position="bottom-right" toastOptions={{
+          style: { background: "#1c1917", color: "#fafaf9", borderRadius: "12px", fontSize: "14px" },
+        }} />
       </body>
     </html>
   );

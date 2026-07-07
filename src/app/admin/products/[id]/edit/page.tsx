@@ -87,24 +87,24 @@ export default function EditProductPage() {
   };
 
   if (fetching) {
-    return <div className="text-center py-12 text-gray-500">Loading...</div>;
+    return <div className="text-center py-12 text-stone-500">Loading...</div>;
   }
 
   return (
     <div className="max-w-2xl">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Edit Product</h1>
+      <h1 className="text-2xl font-bold text-stone-900 mb-6">Edit Product</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input label="Product Name *" name="name" value={form.name} onChange={handleChange} required />
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">Description</label>
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             rows={4}
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+            className="w-full px-3 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-900 focus:border-stone-900 outline-none text-sm"
           />
         </div>
 
@@ -114,12 +114,12 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">Category *</label>
           <select
             name="categoryId"
             value={form.categoryId}
             onChange={handleChange}
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+            className="w-full px-3 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-900 focus:border-stone-900 outline-none text-sm"
             required
           >
             <option value="">Select category...</option>
@@ -130,13 +130,13 @@ export default function EditProductPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Image URLs (one per line)</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">Image URLs (one per line)</label>
           <textarea
             name="images"
             value={form.images}
             onChange={handleChange}
             rows={3}
-            className="w-full px-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm"
+            className="w-full px-3 py-2.5 border border-stone-300 rounded-xl focus:ring-2 focus:ring-stone-900 focus:border-stone-900 outline-none text-sm"
           />
         </div>
 
@@ -144,8 +144,8 @@ export default function EditProductPage() {
         <Input label="Stock" name="stock" type="number" value={form.stock} onChange={handleChange} />
 
         <label className="flex items-center gap-2">
-          <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} className="rounded border-gray-300" />
-          <span className="text-sm font-medium text-gray-700">Featured product</span>
+          <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} className="rounded border-stone-300" />
+          <span className="text-sm font-medium text-stone-700">Featured product</span>
         </label>
 
         <div className="flex gap-3 pt-4">

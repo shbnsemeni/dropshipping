@@ -2,8 +2,8 @@ import { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost";
-  size?: "sm" | "md" | "lg";
+  variant?: "primary" | "secondary" | "outline" | "danger" | "ghost" | "accent";
+  size?: "sm" | "md" | "lg" | "xl";
   children: ReactNode;
   loading?: boolean;
 }
@@ -18,23 +18,25 @@ export function Button({
   ...props
 }: ButtonProps) {
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm",
-    secondary: "bg-gray-800 text-white hover:bg-gray-900 shadow-sm",
-    outline: "border-2 border-gray-300 text-gray-700 hover:bg-gray-50",
+    primary: "bg-stone-900 text-white hover:bg-stone-800 shadow-sm",
+    secondary: "bg-stone-100 text-stone-900 hover:bg-stone-200",
+    accent: "bg-rose-500 text-white hover:bg-rose-600 shadow-sm shadow-rose-200",
+    outline: "border-2 border-stone-300 text-stone-700 hover:bg-stone-50",
     danger: "bg-red-600 text-white hover:bg-red-700 shadow-sm",
-    ghost: "text-gray-600 hover:bg-gray-100",
+    ghost: "text-stone-600 hover:bg-stone-100",
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-sm",
+    sm: "px-3 py-1.5 text-xs",
     md: "px-5 py-2.5 text-sm",
-    lg: "px-8 py-3 text-base",
+    lg: "px-7 py-3 text-sm",
+    xl: "px-10 py-4 text-base",
   };
 
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center font-medium rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]",
         variants[variant],
         sizes[size],
         className

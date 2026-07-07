@@ -91,7 +91,7 @@ export default function AdminCategoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
+        <h1 className="text-2xl font-bold text-stone-900">Categories</h1>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="w-4 h-4 mr-2" />
           Add Category
@@ -100,23 +100,23 @@ export default function AdminCategoriesPage() {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((cat) => (
-          <div key={cat.id} className="bg-white rounded-xl border border-gray-200 p-4 flex items-center justify-between">
+          <div key={cat.id} className="bg-white rounded-2xl border border-stone-200 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
               {cat.image && (
-                <img src={cat.image} alt={cat.name} className="w-12 h-12 object-cover rounded-lg" />
+                <img src={cat.image} alt={cat.name} className="w-12 h-12 object-cover rounded-xl" />
               )}
               <div>
-                <p className="font-medium text-gray-900">{cat.name}</p>
-                <p className="text-xs text-gray-500">{cat._count.products} products</p>
+                <p className="font-medium text-stone-900">{cat.name}</p>
+                <p className="text-xs text-stone-500">{cat._count.products} products</p>
               </div>
             </div>
-            <button onClick={() => setDeleteId(cat.id)} className="p-2 hover:bg-red-50 rounded-full">
-              <Trash2 className="w-4 h-4 text-gray-400 hover:text-red-500" />
+            <button onClick={() => setDeleteId(cat.id)} className="p-2 hover:bg-red-50 rounded-xl transition-colors">
+              <Trash2 className="w-4 h-4 text-stone-400 hover:text-red-500 transition-colors" />
             </button>
           </div>
         ))}
         {categories.length === 0 && !loading && (
-          <div className="col-span-full text-center py-12 text-gray-500">
+          <div className="col-span-full text-center py-12 text-stone-500">
             No categories yet
           </div>
         )}
@@ -134,7 +134,7 @@ export default function AdminCategoriesPage() {
       </Modal>
 
       <Modal open={!!deleteId} onClose={() => setDeleteId(null)} title="Delete Category">
-        <p className="text-gray-600 mb-6">Are you sure? Products in this category will remain but won&apos;t have a category assigned.</p>
+        <p className="text-stone-600 mb-6">Are you sure? Products in this category will remain but won&apos;t have a category assigned.</p>
         <div className="flex justify-end gap-3">
           <Button variant="outline" onClick={() => setDeleteId(null)}>Cancel</Button>
           <Button variant="danger" onClick={() => handleDelete(deleteId!)} loading={deleting}>Delete</Button>

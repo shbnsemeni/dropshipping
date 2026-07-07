@@ -8,11 +8,41 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   name      String
   password  String
-  createdAt DateTime @default(now())
+  emailVerified DateTime?
+  image     String?
+  role      String     @default("customer")
+  addresses Address[]
+  orders    Order[]
+  createdAt DateTime   @default(now())
+}
+
+model Customer {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  password      String
+  sessionToken  String?
+  createdAt     DateTime @default(now())
+}
+
+model Address {
+  id          String @id @default(cuid())
+  userId      String
+  user        User   @relation(fields: [userId], references: [id])
+  label       String @default("Home")
+  fullName    String
+  phone       String
+  street      String
+  city        String
+  state       String
+  zip         String
+  country     String @default("US")
+  isDefault   Boolean @default(false)
+  createdAt   DateTime @default(now())
 }
 
 model Category {
@@ -37,20 +67,26 @@ model Product {
   aliExpressUrl String?
   stock         Int         @default(999)
   featured      Boolean     @default(false)
-  createdAt     DateTime    @default(now())
+  rating        Float       @default(4.5)
+  reviewCount   Int         @default(0)
   orderItems    OrderItem[]
+  createdAt     DateTime    @default(now())
 }
 
 model Order {
   id              String      @id @default(cuid())
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id])
   customerEmail   String
   customerName    String
+  phone           String?
   address         String
   city            String
   state           String
   zip             String
   country         String
   total           Float
+  shippingCost    Float       @default(4.99)
   status          String      @default("paid")
   stripeSessionId String?
   items           OrderItem[]

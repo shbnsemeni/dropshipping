@@ -66,7 +66,7 @@ export default function AdminOrdersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Orders</h1>
+      <h1 className="text-2xl font-bold text-stone-900 mb-6">Orders</h1>
 
       <div className="flex gap-2 mb-6 flex-wrap">
         {statuses.map((s) => (
@@ -74,7 +74,7 @@ export default function AdminOrdersPage() {
             key={s}
             onClick={() => setStatusFilter(s)}
             className={`px-4 py-2 rounded-full text-sm font-medium capitalize transition-colors ${
-              statusFilter === s ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              statusFilter === s ? "bg-stone-900 text-white shadow-sm" : "bg-stone-100 text-stone-600 hover:bg-stone-200"
             }`}
           >
             {s}
@@ -82,10 +82,10 @@ export default function AdminOrdersPage() {
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="text-left text-sm text-gray-500 bg-gray-50">
+            <tr className="text-left text-sm text-stone-500 bg-stone-50">
               <th className="px-6 py-3 font-medium">Customer</th>
               <th className="px-6 py-3 font-medium">Items</th>
               <th className="px-6 py-3 font-medium">Total</th>
@@ -94,12 +94,12 @@ export default function AdminOrdersPage() {
               <th className="px-6 py-3 font-medium">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-stone-100">
             {orders.map((order) => (
-              <tr key={order.id} className="text-sm text-gray-900 hover:bg-gray-50">
+              <tr key={order.id} className="text-sm text-stone-900 hover:bg-stone-50">
                 <td className="px-6 py-4">
                   <p className="font-medium">{order.customerName}</p>
-                  <p className="text-gray-500 text-xs">{order.customerEmail}</p>
+                  <p className="text-stone-500 text-xs">{order.customerEmail}</p>
                 </td>
                 <td className="px-6 py-4">{order.items.length} items</td>
                 <td className="px-6 py-4 font-medium">${order.total.toFixed(2)}</td>
@@ -108,7 +108,7 @@ export default function AdminOrdersPage() {
                     {order.status}
                   </Badge>
                 </td>
-                <td className="px-6 py-4 text-gray-500">
+                <td className="px-6 py-4 text-stone-500">
                   {new Date(order.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4">
@@ -137,7 +137,7 @@ export default function AdminOrdersPage() {
             ))}
             {orders.length === 0 && !loading && (
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                <td colSpan={6} className="px-6 py-8 text-center text-stone-500">
                   No orders found
                 </td>
               </tr>

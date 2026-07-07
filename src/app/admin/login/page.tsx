@@ -11,23 +11,19 @@ import toast from "react-hot-toast";
 export default function AdminLoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.email || !form.password) {
+  const handleLogin = async () => {
+    if (!email || !password) {
       toast.error("Please fill in all fields");
       return;
     }
 
     setLoading(true);
     const result = await signIn("credentials", {
-      email: form.email,
-      password: form.password,
+      email,
+      password,
       redirect: false,
     });
 
@@ -40,21 +36,23 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-stone-50">
+      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <LayoutDashboard className="w-12 h-12 text-blue-600 mx-auto mb-3" />
-          <h1 className="text-2xl font-bold text-gray-900">Admin Login</h1>
-          <p className="text-gray-500 text-sm mt-1">JSitemaUang Admin Dashboard</p>
+          <div className="w-14 h-14 bg-stone-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <LayoutDashboard className="w-7 h-7 text-white" />
+          </div>
+          <h1 className="text-2xl font-bold text-stone-900">Admin Login</h1>
+          <p className="text-stone-500 text-sm mt-1">JSitemaUang Admin Dashboard</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-4">
           <Input
             label="Email"
             name="email"
             type="email"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="admin@jsitemuang.xyz"
             required
           />
@@ -62,15 +60,15 @@ export default function AdminLoginPage() {
             label="Password"
             name="password"
             type="password"
-            value={form.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
             required
           />
-          <Button type="submit" className="w-full" size="lg" loading={loading}>
+          <Button onClick={handleLogin} className="w-full" size="lg" loading={loading}>
             {loading ? "Signing in..." : "Sign In"}
           </Button>
-        </form>
+        </div>
       </div>
     </div>
   );
